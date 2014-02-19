@@ -67,12 +67,12 @@ namespace :deploy do
     on roles(:app) do
       sudo "ln -nfs /home/deployer/apps/blog/current/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
       sudo "ln -nfs /home/deployer/apps/blog/current/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
-      execute "mkdir -p #{fetch(:shared_path)}/config"
+      #execute "mkdir -p #{fetch(:shared_path)}/config"
       #put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
       puts "Now edit the config files in #{fetch(:shared_path)}."
     end
   end
-  
+
     after :finishing, 'deploy:setup_config'
 
 end
