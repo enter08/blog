@@ -51,7 +51,7 @@ namespace :deploy do
       end
     end
 
-    description 'Application stopped!'
+    desc 'Application stopped!'
     task :stop do
       on roles(:all) do
         execute "/etc/init.d/unicorn_#{fetch(:application)} stop"
