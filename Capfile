@@ -1,4 +1,4 @@
-require 'capistrano3/unicorn'
+#require 'capistrano3/unicorn'
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 
@@ -17,7 +17,7 @@ require 'capistrano/rails'
 #   https://github.com/capistrano/rails
 #
 # require 'capistrano/rvm'
-# require 'capistrano/rbenv'
+ require 'capistrano/rbenv'
 # require 'capistrano/chruby'
 # require 'capistrano/bundler'
 # require 'capistrano/rails/assets'

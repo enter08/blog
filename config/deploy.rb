@@ -1,10 +1,15 @@
-SSHKit.config.command_map[:rake] = "bundle exec rake"
+#SSHKit.config.command_map[:rake] = "bundle exec rake"
 
 # config valid only for Capistrano 3.1
 lock '3.1.0'
 
+set :rbenv_ruby, '2.1.0'
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_roles, :all # default value
+
 set :application, 'blog'
-set :repo_url, 'git@github.com:redzep/blog.git'
+set :repo_url, 'git@github.com:enter08/blog.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
