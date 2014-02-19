@@ -73,7 +73,7 @@ namespace :deploy do
     end
   end
 
-    after :finishing, 'deploy:setup_config'
+  after :finishing, 'deploy:setup_config'
 
 end
 
