@@ -45,29 +45,37 @@ set :repo_url, 'git@github.com:enter08/blog.git'
 
 namespace :deploy do
 
-  task :start do
-      on roles(:all) do
-        execute "/etc/init.d/unicorn_#{fetch(:application)} start"
+  %w[start stop restart].each do |command|
+    task command do
+      on roles(:app) do
+        execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
       end
     end
+  end
 
-    desc 'Application stopped!'
-    task :stop do
-      on roles(:all) do
-        execute "/etc/init.d/unicorn_#{fetch(:application)} stop"
-      end
-    end
+  # task :start do
+  #     on roles(:all) do
+  #       execute "/etc/init.d/unicorn_#{fetch(:application)} start"
+  #     end
+  #   end
 
-    task :restart do
-      on roles(:all) do
-        execute "/etc/init.d/unicorn_#{fetch(:application)} restart"
-      end
-    end
+  #   desc 'Application stopped!'
+  #   task :stop do
+  #     on roles(:all) do
+  #       execute "/etc/init.d/unicorn_#{fetch(:application)} stop"
+  #     end
+  #   end
+
+  #   task :restart do
+  #     on roles(:all) do
+  #       execute "/etc/init.d/unicorn_#{fetch(:application)} restart"
+  #     end
+  #   end
 
   task :setup_config do
     on roles(:app) do
-      sudo "ln -nfs /home/deployer/apps/blog/current/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
-      sudo "ln -nfs /home/deployer/apps/blog/current/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
+      execute :sudo, "ln", "-nfs", "/home/deployer/apps/blog/current/config/nginx.conf", "/etc/nginx/sites-enabled/#{fetch(:application)}"
+      execute :sudo, "ln", "-nfs", "/home/deployer/apps/blog/current/config/unicorn_init.sh", "/etc/init.d/unicorn_#{fetch(:application)}"
       #execute "mkdir -p #{fetch(:shared_path)}/config"
       #put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
       puts "Now edit the config files in #{fetch(:shared_path)}."
